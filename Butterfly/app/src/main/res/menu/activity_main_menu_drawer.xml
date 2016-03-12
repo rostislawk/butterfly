@@ -3,29 +3,33 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_photos"
-            android:icon="@drawable/ic_menu_photos"
-            android:title="Photos" />
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Gallery" />
         <item
-            android:id="@+id/nav_take_photo"
-            android:icon="@drawable/ic_menu_take_photo"
-            android:title="Take a photo" />
+            android:id="@+id/nav_yafotki"
+            android:icon="@drawable/ic_action_name"
+            android:title="YaFotki" />
         <item
             android:id="@+id/nav_favorites"
             android:icon="@drawable/ic_menu_favorites"
             android:title="Favorites" />
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_settings"
-            android:title="Settings" />
+            android:id="@+id/nav_take_photo"
+            android:icon="@drawable/ic_menu_take_photo"
+            android:title="Take a photo" />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_about"
-                android:title="About" />
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_settings"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_report"
+                android:icon="@drawable/ic_menu_report_isssue"
+                android:title="Report issue" />
         </menu>
     </item>
 
