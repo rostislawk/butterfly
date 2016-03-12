@@ -20,9 +20,7 @@ import java.util.List;
 
 public class MainMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
+    
     private ViewPager viewPager;
 
     @Override
@@ -30,11 +28,14 @@ public class MainMenu extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         setupViewPager(viewPager);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -100,12 +101,14 @@ public class MainMenu extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_gallery) {
-
+            viewPager.setCurrentItem(0);
+        } else if (id == R.id.nav_yafotki) {
+            viewPager.setCurrentItem(1);
+        } else if (id == R.id.nav_favorites) {
+            viewPager.setCurrentItem(2);
         } else if (id == R.id.nav_take_photo) {
             Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             startActivity(cameraIntent);
-        } else if (id == R.id.nav_favorites) {
-
         } else if (id == R.id.nav_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
