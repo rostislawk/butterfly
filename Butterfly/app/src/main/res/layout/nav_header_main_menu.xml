@@ -19,9 +19,9 @@
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/ic_menu_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/nh_avatar"
             android:cropToPadding="false"
             android:adjustViewBounds="false" />
 
