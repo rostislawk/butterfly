@@ -85,7 +85,8 @@ public class MainMenu extends AppCompatActivity
         if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_take_photo) {
-            // Handle the camera action
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, 1888);
         } else if (id == R.id.nav_favorites) {
 
         } else if (id == R.id.nav_settings) {
