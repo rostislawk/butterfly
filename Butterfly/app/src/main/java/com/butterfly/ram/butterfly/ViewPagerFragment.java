@@ -1,18 +1,24 @@
 package com.butterfly.ram.butterfly;
 
 import android.os.Bundle;
+import android.sax.TextElementListener;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by rostislawk on 12.3.16.
  */
-public class GalleryFragment extends Fragment {
+public class ViewPagerFragment extends Fragment {
 
-    public GalleryFragment() {
+    public String title;
+
+    public ViewPagerFragment() {
 
     }
 
@@ -26,6 +32,10 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.gallery_fragment, container, false);
+        View view = inflater.inflate(R.layout.view_pager_fragment, container, false);
+        TextView textView = (TextView) view.findViewById(R.id.view_pager_fragment_title);
+        textView.setText(title);
+
+        return view;
     }
 }

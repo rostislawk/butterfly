@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class MainMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    
+
     private ViewPager viewPager;
 
     @Override
@@ -31,7 +30,7 @@ public class MainMenu extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewPager = (ViewPager)findViewById(R.id.view_pager);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
         setupViewPager(viewPager);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -49,14 +48,14 @@ public class MainMenu extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new GalleryFragment(), stringById(R.string.gallery));
-        adapter.addFragment(new YaFotkiFragment(), stringById(R.string.yafotki));
-        adapter.addFragment(new FavoritesFragment(), stringById(R.string.favorites));
+        adapter.addFragment(new ViewPagerFragment(), stringById(R.string.gallery));
+        adapter.addFragment(new ViewPagerFragment(), stringById(R.string.yafotki));
+        adapter.addFragment(new ViewPagerFragment(), stringById(R.string.favorites));
         viewPager.setAdapter(adapter);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<ViewPagerFragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager manager) {
@@ -64,7 +63,7 @@ public class MainMenu extends AppCompatActivity
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public ViewPagerFragment getItem(int position) {
             return mFragmentList.get(position);
         }
 
@@ -73,7 +72,8 @@ public class MainMenu extends AppCompatActivity
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        public void addFragment(ViewPagerFragment fragment, String title) {
+            fragment.title = title;
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
