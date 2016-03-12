@@ -66,4 +66,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
 
     <string name="dev_email">rostislawko@yandex.ru</string>
+    <string name="gallery">Gallery</string>
+    <string name="yafotki">YaFotki</string>
+    <string name="favorites">Favorites</string>
 </resources>
