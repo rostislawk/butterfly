@@ -1,5 +1,7 @@
 package com.butterfly.ram.butterfly;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -87,9 +89,15 @@ public class MainMenu extends AppCompatActivity
         } else if (id == R.id.nav_favorites) {
 
         } else if (id == R.id.nav_settings) {
-
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
         } else if (id == R.id.nav_report) {
-
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+            emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            emailIntent.setType("vnd.android.cursor.item/email");
+            String email = getResources().getString(R.string.dev_email);
+            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{ email });
+            startActivity(Intent.createChooser(emailIntent, "Send mail using..."));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
