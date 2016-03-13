@@ -1,6 +1,7 @@
 package com.butterfly.ram.butterfly;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,10 +33,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    private List<Image> mImages;
+    private List<Integer> mImagesIDs;
 
-    public RecyclerViewAdapter(List<Image> images) {
-        mImages = images;
+    public RecyclerViewAdapter() {
+        mImagesIDs = new ArrayList<Integer>();
+        mImagesIDs.add(R.mipmap.pic1);
+        mImagesIDs.add(R.mipmap.pic2);
+        mImagesIDs.add(R.mipmap.pic3);
+        mImagesIDs.add(R.mipmap.pic4);
+        mImagesIDs.add(R.mipmap.pic5);
     }
 
     @Override
@@ -55,6 +62,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView textView = holder.itemNumberLabel;
         textView.setText(String.valueOf(position + 1));
 
+        SquareImageView imageView = holder.thumbnailView;
+        imageView.setImageResource(mImagesIDs.get(position % mImagesIDs.size()));
     }
 
     @Override

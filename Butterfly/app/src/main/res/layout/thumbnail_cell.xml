@@ -9,8 +9,7 @@
         android:id="@+id/thumbnail_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/nh_avatar"/>
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/image_number"
