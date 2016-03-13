@@ -73,7 +73,7 @@ public class MainMenu extends AppCompatActivity
         }
 
         public void addFragment(ViewPagerFragment fragment, String title) {
-            fragment.title = title;
+//            fragment.title = title;
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
