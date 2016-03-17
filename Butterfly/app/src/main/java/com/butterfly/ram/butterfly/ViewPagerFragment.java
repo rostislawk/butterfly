@@ -26,6 +26,7 @@ public class ViewPagerFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
+    public RecyclerViewAdapter adapter;
 
     public ViewPagerFragment() {
 
