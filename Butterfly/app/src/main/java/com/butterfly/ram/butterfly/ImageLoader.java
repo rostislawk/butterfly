@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.AsyncTask;
 import android.support.v4.util.LruCache;
 import android.widget.ImageView;
@@ -18,20 +19,14 @@ public class ImageLoader {
 
     private Context mContext;
     private Bitmap mPlaceholder;
-    private LruCache<Integer, Bitmap> mMemoryCache;
+    private MemoryCache mMemoryCache;
 
     public ImageLoader(Context context) {
         mContext = context;
+        mMemoryCache = new MemoryCache();
         mPlaceholder = BitmapUtils.decodeSampleBitmapFromResource(mContext.getResources(),
-                R.mipmap.placeholder, 200, 200);
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        final int cacheSize = maxMemory / 8;
-        mMemoryCache = new LruCache<Integer, Bitmap>(cacheSize) {
-            @Override
-            protected int sizeOf(Integer key, Bitmap value) {
-                return value.getByteCount() / 1024;
-            }
-        };
+                R.mipmap.placeholder, 360, 360);
+
     }
 
     public void loadBitmap(int resId, ImageView imageView) {
@@ -46,16 +41,6 @@ public class ImageLoader {
 
     private Bitmap getPlaceholder() {
         return mPlaceholder;
-    }
-
-    private void addBitmapToMemoryCache(Integer key, Bitmap bitmap) {
-        if (getBitmapFromMemoryCache(key) == null) {
-            mMemoryCache.put(key, bitmap);
-        }
-    }
-
-    private Bitmap getBitmapFromMemoryCache(Integer key) {
-        return mMemoryCache.get(key);
     }
 
     public static boolean cancelPotentialWork(int data, ImageView imageView) {
@@ -95,10 +80,10 @@ public class ImageLoader {
         @Override
         protected Bitmap doInBackground(Integer... params) {
             data = params[0];
-            Bitmap cachedBitmap = getBitmapFromMemoryCache(data);
+            Bitmap cachedBitmap = mMemoryCache.getBitmap(data);
             if (cachedBitmap == null) {
-                cachedBitmap = BitmapUtils.decodeSampleBitmapFromResource(mContext.getResources(), data, 200, 200);
-                addBitmapToMemoryCache(data, cachedBitmap);
+                cachedBitmap = BitmapUtils.decodeSampleBitmapFromResource(mContext.getResources(), data, 360, 360);
+                mMemoryCache.setBitmap(data, cachedBitmap);
             }
             return cachedBitmap;
         }
@@ -113,7 +98,12 @@ public class ImageLoader {
                 final ImageView imageView = imageViewReference.get();
                 final BitmapWorkerTask bitmapWorkerTask = getBitmapWorkerTask(imageView);
                 if (this == bitmapWorkerTask && imageView != null) {
-                    imageView.setImageBitmap(bitmap);
+                    Drawable[] layers = new Drawable[2];
+                    layers[0] = new BitmapDrawable(getPlaceholder());
+                    layers[1] = new BitmapDrawable(bitmap);
+                    TransitionDrawable transitionDrawable = new TransitionDrawable(layers);
+                    imageView.setImageDrawable(transitionDrawable);
+                    transitionDrawable.startTransition(300);
                 }
             }
         }
