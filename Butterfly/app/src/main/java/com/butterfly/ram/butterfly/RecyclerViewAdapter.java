@@ -1,25 +1,20 @@
 package com.butterfly.ram.butterfly;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +37,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     private List<Integer> mImagesIDs;
-    public List<String> imageURLs;
+    private Context mContext;
+    private ImageLoader mImageLoader;
 
-    public RecyclerViewAdapter() {
+    public RecyclerViewAdapter(Context context) {
+        mContext = context;
+        mImageLoader = new ImageLoader(context);
         mImagesIDs = new ArrayList<Integer>();
         mImagesIDs.add(R.mipmap.pic1);
         mImagesIDs.add(R.mipmap.pic2);
@@ -55,8 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         View item_view = inflater.inflate(R.layout.thumbnail_cell, parent, false);
         ViewHolder viewHolder = new ViewHolder(item_view);
@@ -66,20 +63,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //Image image = mImages.get(position);
-
         TextView textView = holder.itemNumberLabel;
         textView.setText(String.valueOf(position + 1));
 
         SquareImageView imageView = holder.thumbnailView;
-        imageView.setImageResource(mImagesIDs.get(position % mImagesIDs.size()));
+        int resID = mImagesIDs.get(position % mImagesIDs.size());
+        setPlaceholderIfNeeded(imageView);
+        mImageLoader.loadBitmap(resID, imageView);
+    }
+
+    private void setPlaceholderIfNeeded(ImageView imageView) {
+        if (imageView.getDrawable() == null) {
+            BitmapUtils.decodeSampleBitmapFromResource(mContext.getResources(),
+                    R.mipmap.placeholder, 200, 200);
+        }
     }
 
     @Override
     public int getItemCount() {
         return 100;
     }
-
-
 
 }

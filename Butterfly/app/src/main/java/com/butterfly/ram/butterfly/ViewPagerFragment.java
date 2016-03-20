@@ -45,7 +45,7 @@ public class ViewPagerFragment extends Fragment {
         View view = inflater.inflate(R.layout.view_pager_fragment, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mLayoutManager = new GridLayoutManager(getActivity(), 3);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter();
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext());
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
