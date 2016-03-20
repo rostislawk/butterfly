@@ -68,15 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         SquareImageView imageView = holder.thumbnailView;
         int resID = mImagesIDs.get(position % mImagesIDs.size());
-        setPlaceholderIfNeeded(imageView);
         mImageLoader.loadBitmap(resID, imageView);
-    }
-
-    private void setPlaceholderIfNeeded(ImageView imageView) {
-        if (imageView.getDrawable() == null) {
-            BitmapUtils.decodeSampleBitmapFromResource(mContext.getResources(),
-                    R.mipmap.placeholder, 200, 200);
-        }
     }
 
     @Override
